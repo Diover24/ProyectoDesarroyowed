@@ -1,0 +1,35 @@
+#Footer{
+    background-color: rgb(0, 0, 0)
+}
+#Header{
+    background-color: rgb(4, 4, 53);
+}
+.btn{
+    background-color: #f89b05;
+}
+.card{
+    width: 350px;
+    border-radius: 10px;
+    background-color: #eceeef;
+}
+#form{
+    text-align: center;
+    color: white;
+    border-radius: 30px;
+    background-color: rgb(4, 4, 53);
+}
+#LinkMenu{
+    color: white;
+}
+
+#Help{
+    
+    border-radius: 30px;
+    color: white;
+    max-width: 600px;
+    background-color: rgb(4, 4, 53);
+}
+#Chat{
+    height: 400px;
+    overflow-y: "auto"; 
+}
