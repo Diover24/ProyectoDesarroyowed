@@ -4,7 +4,7 @@ export default function Create_an_account() {
     return (
 
         <div className='container ' id='form'>
-            <h1 className='text-decoration-underline'>Registro</h1>
+            <h1 className='text-decoration'>Registro</h1>
             {!mostrarSegundoFormulario ? (
                 <form className="row g-3 align-items-center" id='FormPrin'>
                     <div className='row mt-4 mb-3'>
@@ -105,7 +105,7 @@ export default function Create_an_account() {
                         </div>
                         <div className='row'>
 
-                            <div className="col">
+                            <div className="col mb-3">
                                 <label for="Dirrecccion" className="form-label">Contraseña</label>
                                 <input type="password" className="form-control " id="Contraseña" required />
                             </div>

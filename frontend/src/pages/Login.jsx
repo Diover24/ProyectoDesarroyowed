@@ -5,7 +5,7 @@ export default function Login() {
     <div >
       <div className='container align-items-center ' id='form'>
         <form className='row g-3 mt-3'>
-          <h1 className='text-decoration-underline'>Inicio De Sessión</h1>
+          <h1 className='text-decoration'>Inicio De Sesión</h1>
           <div className="form-floating mb-3 mt-3">
             <div className="input-group has-validation">
               <span className="input-group-text" id="user">@</span>
@@ -17,9 +17,9 @@ export default function Login() {
             </div>
 
           </div>
-          <div className=" form-floating mb-3">
-            <input type="password" className="form-control" id="floatingPassword" required />
-            <label for="floatingPassword">Password</label>
+          <div className='mb-3'>
+            <input type="password" className="form-control" placeholder="password" id="floatingPassword" required />
+           
           </div>
           <div className='text-center'>
             <button type="submit" className="btn btn-dark mb-3 ">Iniciar Sesión</button>
