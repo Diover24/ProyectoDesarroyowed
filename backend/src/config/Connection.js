@@ -1,4 +1,4 @@
-import sql, { pool } from 'mssql'
+import sql from 'mssql'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -7,14 +7,14 @@ const stringConnection ={
     password : process.env.PASSWORD,
     server : process.env.SERVER,
     database: process.env.DATABASE,
-    Options : {
-        trusServerCertificate : true,
+    options : {
+        trustServerCertificate : true,
     }
 }
 const getConnection = new sql.ConnectionPool(stringConnection)
 .connect()
 .then(pool =>{
-    console.log('lloro')
+    console.log('Tamos conectados')
     return pool
 })
 .catch(err => console.log('ERROR ',err))

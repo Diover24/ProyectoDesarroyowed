@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className='container'>
       <div className='row align-items-center'>
-        <div className='col-4'>
+        <div className='col'>
           <div className="card" >
           <img src="/aviso.jpeg" class="card-img-top" alt="..."/>
             <div className="card-body">
@@ -13,7 +13,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className='col-4'>
+        <div className='col'>
           <div className='card'>
           <img src="/impuestos.jpg" class="card-img-top" alt="..."/>
             <div className='card-body'>
@@ -29,7 +29,7 @@ export default function Home() {
           </div>
 
         </div>
-        <div className='col-4'>
+        <div className='col'>
          <div className="card" >
           <img src="/formulario.jpeg" class="card-img-top" alt="..."/>
           <div className="card-body">
