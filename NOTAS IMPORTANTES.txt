@@ -1,0 +1,9 @@
+recuerden instalar los node en frontend: npm install.
+
+abren 2 terminales en el visual una para la carpeta cd frontend y otra para la carpeta cd backend en ambas npm run dev.
+
+creo que tienen que crear un usuario de la forma en que lo hizo el profe y le colocan
+user:pepe
+password:321
+
+Diover: estoy trabajando en el archivo MyTaxes y muy pronto en el InterfacesParther
