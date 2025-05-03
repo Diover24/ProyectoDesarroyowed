@@ -7,3 +7,4 @@ user:pepe
 password:321
 
 Diover: estoy trabajando en el archivo MyTaxes y muy pronto en el InterfacesParther
+ tienen que darle iniciar Sesión para poder visualizar los impuestos
