@@ -12,6 +12,11 @@
     border-radius: 10px;
     background-color: #eceeef;
 }
+#MyTaxes{
+    width: 850px;
+    border-radius: 10px;
+    background-color: #eceeef;
+}
 #form{
     text-align: center;
     color: white;
@@ -32,4 +37,7 @@
 #Chat{
     height: 400px;
     overflow-y: "auto"; 
+}
+#filtros{
+    width: 170px;
 }

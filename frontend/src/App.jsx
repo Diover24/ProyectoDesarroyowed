@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Create_an_account from './pages/Create_an_account';
 import Help from './pages/Help';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import MyTaxes from './pages/MyTaxes';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Routes>
         <Route path='/' element={<Home/> }/> 
         <Route path='/Login' element={<Login/> }/> 
+        <Route path='/MyTaxes' element={<MyTaxes/> }/>
         <Route path='/Register' element={<Create_an_account />} /> 
         <Route path='/Help' element={<Help/>}></Route>
         </Routes>

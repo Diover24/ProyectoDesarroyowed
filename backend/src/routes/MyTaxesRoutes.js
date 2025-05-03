@@ -1,8 +1,6 @@
-import { getConnection } from "../config/Connection.js";
-import { getAllT } from "../controller/MytaxesController.js";
-import express from 'express'
-const router = express.Router()
-router.get('/Mytaxes', getAllT, (req, res) => {
-    res.send('Lista de impuestos');
-});
+import { getAllT } from '../controller/MyTaxesController.js';
+import express from 'express';
+const router = express.Router();
+router.post('/Mytaxes', getAllT);
+
 export default router;

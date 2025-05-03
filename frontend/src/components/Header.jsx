@@ -13,8 +13,9 @@ export default function Header() {
           <a className='navbar-brand ' href="http://localhost:5173/">
             <img src="/img/tributum.gif" alt="" width="130" height="40" className="d-inline-block align-text-top" />
           </a>
-          <div class="">
 
+          <div class="">
+            <Link to="/MyTaxes" className="btn btn-dark ">Visualizar Impuesto for de momen</Link>
 
 
           </div>

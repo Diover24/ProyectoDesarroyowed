@@ -1,6 +1,7 @@
 -- Crear base de datos
 CREATE DATABASE impuestos;
 GO
+USE impuestos;
 -- Tabla Estado
 CREATE TABLE Estado (
     IdEstado INT IDENTITY(1,1) NOT NULL,
@@ -47,7 +48,7 @@ GO
 -- Tabla Predial
 CREATE TABLE Predial (
     IdPredial INT IDENTITY(1,1) NOT NULL,
-    Direcion VARCHAR(50) NOT NULL,
+    Direccion VARCHAR(50) NOT NULL,
     Metros_Cuadrados INT NOT NULL,
     CONSTRAINT PK_Predial PRIMARY KEY(IdPredial),
 );
@@ -68,7 +69,7 @@ GO
 CREATE TABLE Impuesto (
     IdImpu INT IDENTITY(1,1) NOT NULL,
     Fecha_Limite DATE NOT NULL,
-    Pago MONEY NOT NULL,
+    Total MONEY NOT NULL,
     IdPersonFk INT NOT NULL,
     IdTipoImpuestoFk INT NOT NULL,
     CONSTRAINT PK_Impu PRIMARY KEY(IdImpu),
@@ -181,7 +182,7 @@ select*from Vehiculo
 
 
 -- Insertar datos en la tabla Predial
-INSERT INTO Predial (Direcion, Metros_Cuadrados)
+INSERT INTO Predial (Direccion, Metros_Cuadrados)
 VALUES
 ('Calle 1',  120),
 ('Calle 2',  150),
@@ -207,7 +208,7 @@ VALUES
 select*from Predial
 select*from Tipo_De_Impuesto
 
-INSERT INTO Impuesto (Fecha_Limite, Pago, IdPersonFk, IdTipoImpuestoFk)
+INSERT INTO Impuesto (Fecha_Limite, Total, IdPersonFk, IdTipoImpuestoFk)
 VALUES
 ('2025-12-31', 500.00, 1, 1),  
 ('2025-11-30', 400.00, 2, 2), 
@@ -463,7 +464,7 @@ BEGIN
 END
 
 
-EXEC MostrarImpuestos 3
+EXEC MostrarImpuestosVehiculo 1
 
 CREATE PROCEDURE MostrarImpuestosPredial
 	@id INT
@@ -481,3 +482,4 @@ BEGIN
 	INNER JOIN Predial P ON T.IdPredialfk = P.IdPredial 
 	WHERE I.IdPersonFk = @id
 END
+EXEC MostrarImpuestosPredial 1
