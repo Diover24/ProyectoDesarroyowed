@@ -2,14 +2,14 @@
 CREATE DATABASE impuestos;
 GO
 USE impuestos;
--- Tabla Estado
+
 CREATE TABLE Estado (
     IdEstado INT IDENTITY(1,1) NOT NULL,
     Nombre VARCHAR(100) NOT NULL,
     CONSTRAINT PK_Estado PRIMARY KEY(IdEstado)
 );
 GO
--- Tabla Persona
+
 CREATE TABLE Persona (
     IdPerson INT IDENTITY(1,1) NOT NULL,
     Estado VARCHAR(50) NOT NULL CHECK (Estado IN ('activo','inactivo')),
@@ -24,7 +24,7 @@ CREATE TABLE Persona (
     CONSTRAINT PK_Persona PRIMARY KEY(IdPerson)
 );
 GO
---Tabla User
+
 CREATE TABLE Usuario (
 	IdUser INT IDENTITY (1,1) NOT NULL,
 	Usuario VARCHAR(50) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE Usuario (
 	CHECK (Rol IN('Admin','Parther'))
 )
 GO
--- Tabla Vehiculo
+
 CREATE TABLE Vehiculo (
     IdVehiculo INT IDENTITY(1,1) NOT NULL,
     Nombre VARCHAR(50) NOT NULL CHECK (Nombre IN ('Moto','Carro')),
@@ -45,7 +45,7 @@ CREATE TABLE Vehiculo (
     CONSTRAINT PK_Vehivulo PRIMARY KEY(IdVehiculo),
 );
 GO
--- Tabla Predial
+
 CREATE TABLE Predial (
     IdPredial INT IDENTITY(1,1) NOT NULL,
     Direccion VARCHAR(50) NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE Predial (
     CONSTRAINT PK_Predial PRIMARY KEY(IdPredial),
 );
 GO
--- Tabla Tipo_De_Impuesto
+
 CREATE TABLE Tipo_De_Impuesto (
     IdTipoImpu INT IDENTITY(1,1) NOT NULL,
 	IdVehiculofk INT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE Tipo_De_Impuesto (
 );
 GO
 
--- Tabla Impuesto
+
 CREATE TABLE Impuesto (
     IdImpu INT IDENTITY(1,1) NOT NULL,
     Fecha_Limite DATE NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE Impuesto (
     CONSTRAINT FK_impue_TipoImpu FOREIGN KEY (IdTipoImpuestoFk) REFERENCES Tipo_De_Impuesto(IdTipoImpu)
 );
 GO
--- Tabla Notificacion
+
 CREATE TABLE Notificacion (
     IdNotificacion INT IDENTITY(1,1) NOT NULL,
     IdImpuFk INT NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE Notificacion (
     CONSTRAINT FK_Notificacion_Impu FOREIGN KEY (IdImpuFk) REFERENCES Impuesto(IdImpu)
 );
 GO
--- Tabla Factura
+
 CREATE TABLE Factura (
     IdFactura INT IDENTITY(1,1) NOT NULL,
     FechaPago DATE NOT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE Factura (
     CONSTRAINT FK_Factura_Impu FOREIGN KEY (IdImpuFk) REFERENCES Impuesto(IdImpu)
 );
 GO
--- Tabla Historial
+
 CREATE TABLE Historial (
     IdHistorial INT IDENTITY(1,1) NOT NULL,
     IdFacturaFk INT NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE Historial (
     CONSTRAINT FK_Historial_Factura FOREIGN KEY (IdFacturaFk) REFERENCES Factura(IdFactura)
 );
 GO
--- Tabla Pago
+
 CREATE TABLE Pago (
     IdPago INT IDENTITY(1,1) NOT NULL,
     MontoPagado MONEY NOT NULL, 
@@ -114,7 +114,7 @@ CREATE TABLE Pago (
     CONSTRAINT FK_Pago_Factura FOREIGN KEY (IdFacturaFk) REFERENCES Factura(IdFactura)
 );
 GO
--- Tabla DetalleFactura
+
 CREATE TABLE DetalleFactura (
     IdDetalle INT IDENTITY(1,1) NOT NULL,
     IdEstadoFk INT NOT NULL,
@@ -279,7 +279,7 @@ select*from DetalleFactura
 
 
 
-
+----sp 1
 create procedure Estado_factura
 @param1 int
 AS
@@ -293,7 +293,7 @@ EXEC  Estado_factura 1
 
 
 
-
+---sp2
 create procedure Historial_impuesto
 @param1 int
 AS
@@ -308,21 +308,7 @@ END;
 
 
 
- create trigger proteger_datos
- on Persona INSTEAD OF DELETE
- AS
- BEGIN
-  UPDATE Persona
-  set Estado = 'inactivo'
-  WHERE IdPerson in (select IdPerson from deleted);
-  END
-  
-
-  select*from Persona
-  delete from Persona where IdPerson=1
-   
-
-
+--sp3
 CREATE PROCEDURE Actuali_De_Email
 @param1 INT,
 @param2 VARCHAR(100)
@@ -337,7 +323,7 @@ EXEC Actuali_De_Email 1, 'juanp@gmail.com'
 
 
 
-
+--sp4
 CREATE PROCEDURE Actualizacio_De_Telefono
 @param1 INT,
 @param2 BIGINT
@@ -348,6 +334,7 @@ BEGIN
 	WHERE IdPerson=@param1;
 END
 
+--sp5
 CREATE PROCEDURE Actualizacion_De_Contraseña
 @param1 INT,
 @param2 VARCHAR(50)
@@ -358,41 +345,11 @@ BEGIN
 	WHERE IdPersonfk = @param1;
 END
 
-CREATE TRIGGER generador_notifi
-ON Impuesto
-AFTER INSERT
-AS
-BEGIN
-    INSERT INTO Notificacion (IdImpuFk, FechaEnvio, Mensaje)
-    SELECT 
-        i.IdImpu, 
-        DATEADD(DAY, -15, i.Fecha_Limite), -- Enviar notificación 15 días antes de la fecha límite
-        CONCAT('Recordatorio: Su impuesto vence el ', FORMAT(i.Fecha_Limite, 'yyyy-MM-dd'), '.')--y aqui enviamos el recordatorio
-    FROM inserted i;
-END;
 
 
 
 
-CREATE TRIGGER Actualizar_estado_factura
-ON Pago
-AFTER INSERT
-AS
-BEGIN
-
-    UPDATE df --apodo pa detalle de factura
-    SET IdEstadoFk = 2  -- 2 significa 'Pagado'
-    FROM DetalleFactura df
-    INNER JOIN inserted i ON df.IdFacturaFk = i.IdFacturaFk
-    INNER JOIN (
-        SELECT IdFacturaFk, SUM(MontoPagado) AS TotalPagado
-        FROM Pago
-        GROUP BY IdFacturaFk
-    ) p ON df.IdFacturaFk = p.IdFacturaFk
-    WHERE p.TotalPagado >= df.MontoTotal;  -- Se cambia el estado solo si el pago es concretao si sae
-END;
-GO
-
+--sp6
 CREATE PROCEDURE Insertar_Persona
     @Estado VARCHAR(50),
     @Cedula BIGINT,
@@ -426,6 +383,8 @@ EXEC Insertar_Persona
 
 	select*from Persona
 
+
+--sp7
 create procedure actu_metros_cuad 
 @idpredial int,
 @metrosc int
@@ -445,6 +404,8 @@ select * FROM Persona
 select * from Impuesto
 SELECT * FROM Tipo_De_Impuesto
 select*from Vehiculo
+
+--sp8
 CREATE PROCEDURE MostrarImpuestosVehiculo
 	@id INT
 AS
@@ -466,6 +427,7 @@ END
 
 EXEC MostrarImpuestosVehiculo 1
 
+--sp9
 CREATE PROCEDURE MostrarImpuestosPredial
 	@id INT
 AS
@@ -483,3 +445,193 @@ BEGIN
 	WHERE I.IdPersonFk = @id
 END
 EXEC MostrarImpuestosPredial 1
+
+
+
+---sp10
+CREATE PROCEDURE facturas_vencidas_o_sinpagar
+@idpersona int
+as
+begin
+	select F.IdFactura,F.FechaPago ,DF.MontoTotal ,E.Nombre as Estado
+	from Impuesto I
+	inner join Factura F on F.IdImpuFk=I.IdImpu
+	inner join DetalleFactura DF on DF.IdFacturaFk= F.IdFactura
+	inner join Estado E on E.IdEstado=DF.IdEstadoFk
+	where I.IdPersonFk= @idpersona and E.Nombre != 'pagado' or F.FechaPago<GETDATE();
+
+end
+
+EXEC facturas_vencidas_sinpagar 2;
+
+
+SELECT*FROM Factura
+
+
+--sp11
+CREATE PROCEDURE Cambiar_Estado_Usuario
+    @idPersona INT,
+    @nuevoEstado VARCHAR(50)
+AS
+BEGIN
+    UPDATE Persona
+    SET Estado = @nuevoEstado
+    WHERE IdPerson = @idPersona;
+END
+
+select*from Persona
+
+exec Cambiar_Estado_Usuario 2,'activo'
+
+
+
+--trigger1
+CREATE TRIGGER Actualizar_estado_factura
+ON Pago
+AFTER INSERT
+AS
+BEGIN
+
+    UPDATE df --apodo pa detalle de factura
+    SET IdEstadoFk = 2  -- 2 significa 'Pagado'
+    FROM DetalleFactura df
+    INNER JOIN inserted i ON df.IdFacturaFk = i.IdFacturaFk
+    INNER JOIN (
+        SELECT IdFacturaFk, SUM(MontoPagado) AS TotalPagado
+        FROM Pago
+        GROUP BY IdFacturaFk
+    ) p ON df.IdFacturaFk = p.IdFacturaFk
+    WHERE p.TotalPagado >= df.MontoTotal;  -- Se cambia el estado solo si el pago es concretao si sae
+END;
+GO
+
+---trigger2
+CREATE TRIGGER generador_notifi
+ON Impuesto
+AFTER INSERT
+AS
+BEGIN
+    INSERT INTO Notificacion (IdImpuFk, FechaEnvio, Mensaje)
+    SELECT 
+        i.IdImpu, 
+        DATEADD(DAY, -15, i.Fecha_Limite), -- Enviar notificación 15 días antes de la fecha límite
+        CONCAT('Recordatorio: Su impuesto vence el ', FORMAT(i.Fecha_Limite, 'yyyy-MM-dd'), '.')--y aqui enviamos el recordatorio
+    FROM inserted i;
+END;
+
+--trigger3
+ create trigger proteger_datos
+ on Persona INSTEAD OF DELETE
+ AS
+ BEGIN
+  UPDATE Persona
+  set Estado = 'inactivo'
+  WHERE IdPerson in (select IdPerson from deleted);
+  END
+  
+
+  select*from Persona
+  delete from Persona where IdPerson=1
+   
+
+ --trigger5
+
+create trigger no_impu_vencidos
+ on impuesto
+instead of insert
+ as
+ begin
+	 if EXISTS (SELECT 1 FROM inserted WHERE Fecha_Limite<GETDATE())
+		begin
+		RAISERROR('NO ES POSIBLE INSERTAR UNA FECHA LIMITE YA PASADA, INGRESA UNA FECHA LIMITE FUTURA ',16,1);
+		ROLLBACK;
+		end
+	 else 
+		 begin
+		 insert into Impuesto (IdTipoImpuestoFk,IdPersonFk,Fecha_Limite,Total)
+		 select IdTipoImpuestoFk,IdPersonFk,Fecha_Limite,Total 
+		 from inserted
+		 end
+
+ end
+
+ INSERT INTO Impuesto (IdTipoImpuestoFk, IdPersonFk, Fecha_Limite, Total)
+VALUES (1, 2, '2022-01-01', 100);
+
+SELECT * FROM Impuesto;
+
+
+---cursores para practicar 
+
+--cursor1
+--este va a ser para hacerle descuento a un total superior de 500, del 10%
+
+alter procedure descuento_impuesto
+as
+begin
+	declare @id int, @total money
+
+	declare cursor_desc cursor for
+	select IdImpu,Total
+	from Impuesto
+
+	open cursor_desc;
+	fetch next from cursor_desc into @id,@total
+
+	while @@FETCH_STATUS=0
+		begin
+		if (@total>=500)
+			begin
+				update Impuesto
+				set Total=Total*0.90 
+				where IdImpu=@id
+				print 'ID DE IMPUESTO CON DESCUENTO ACTUALIZADO = ' + CAST(@id AS VARCHAR)
+			end
+
+		fetch next from cursor_desc into @id,@total
+		end
+
+	close cursor_desc;
+	deallocate cursor_desc;
+
+end
+
+SELECT*FROM Impuesto
+EXEC descuento_impuesto
+
+
+---cursor2
+---la pelota de diover puso dizque parther, es partner, Dios, igual esta en un check, tons ojito cuando lo corran
+
+CREATE PROCEDURE Corregir_Parther
+as
+begin
+    declare @IdUser INT, @Rol VARCHAR(10);
+
+    declare cursor_roles cursor for
+    select IdUser, Rol 
+	from Usuario;
+
+    open cursor_roles;
+    fetch next from cursor_roles into @IdUser, @Rol;
+
+    WHILE @@FETCH_STATUS = 0
+    begin
+        IF @Rol = 'Parther'
+        begin
+            update Usuario
+            set Rol = 'Partner'
+            where IdUser = @IdUser;
+
+            print 'Rol corregido, del ID = ' + CAST(@IdUser AS VARCHAR);
+        end
+
+        fetch next from cursor_roles into @IdUser, @Rol;
+    end
+
+    close cursor_roles;
+    deallocate cursor_roles;
+end;
+
+select*from Usuario
+exec Corregir_Parther
