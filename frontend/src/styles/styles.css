@@ -1,6 +1,14 @@
 #Footer{
     background-color: rgb(0, 0, 0)
 }
+#carouselExampleCaptions{
+    height: 500px;
+    width: 900px;
+    
+}
+.img{
+    height: 400px;
+    width: 900px;}
 #Header{
     background-color: rgb(4, 4, 53);
 }
@@ -22,6 +30,13 @@
     color: white;
     border-radius: 30px;
     background-color: rgb(4, 4, 53);
+}
+#login{
+    text-align: center;
+    color: white;
+    border-radius: 30px;
+    background-color: rgb(4, 4, 53);
+    width: 500px;
 }
 #LinkMenu{
     color: white;

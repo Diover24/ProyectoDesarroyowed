@@ -2,39 +2,63 @@ import { getConnection } from '../config/Connection.js';
 import UserDto from "../dto/UserDto.js";
 const getAllTaxes = async (filtros, search) => {
     try {
-        
+
         const pool = await getConnection;
         switch (filtros) {
 
-            case 'todos':
-                if (search != null) {
-                    const result = await pool
-                        .request()
-                        .input('IdPerson', sql.Int, UserDto.IdPerson)
-                        .execute('sp_MostrarImpuestosVehiculo');
+            case 'Todos':
+                console.log("todo")
+                const resultV = await pool
+                    .request()
+                    .input('id', UserDto.IdPerson)
+                    .execute('MostrarImpuestosVehiculo');
 
-                }
-                break;
+                console.log(UserDto.IdPerson)
+                const resultp = await pool
+                    .request()
+                    .input('id', UserDto.IdPerson)
+                    .execute('MostrarImpuestosPredial');
+                console.log(UserDto.IdPerson)
+                return {
+                    vehiculos: resultV.recordset,
+                    predial: resultp.recordset
+                  };
             case 'Predial':
-                
+
                 const Predial = await pool
                     .request()
                     .input('id', UserDto.IdPerson)
                     .execute('MostrarImpuestosPredial');
                 console.log(UserDto.IdPerson)
-                return Predial.recordset
+                return {
+                    predial: Predial.recordset
+                };
             case 'Vehiculos':
                 const Vehiculos = await pool
                     .request()
                     .input('id', UserDto.IdPerson)
                     .execute('MostrarImpuestosVehiculo');
-                console.log(UserDto.IdPerson)
-                return Vehiculos.recordset
-            case 'Moto':
-
-                break;
-
+                console.log(UserDto.IdPerson);
+                return {
+                    vehiculos: Vehiculos.recordset
+                };
             default:
+                console.log("todo")
+                const resultVc = await pool
+                    .request()
+                    .input('id', UserDto.IdPerson)
+                    .execute('MostrarImpuestosVehiculo');
+
+                console.log(UserDto.IdPerson)
+                const resultP = await pool
+                    .request()
+                    .input('id', UserDto.IdPerson)
+                    .execute('MostrarImpuestosPredial');
+                console.log(UserDto.IdPerson)
+                return {
+                    vehiculos: resultVc.recordset,
+                    predial: resultP.recordset
+                  };
                 break;
         }
     } catch (error) {

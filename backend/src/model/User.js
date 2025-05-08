@@ -38,24 +38,28 @@ export const loginUser = async (userData) => {
         .input('Username', Username)
         .input('Password', Password)
         .query(`SELECT * FROM Usuario WHERE Usuario= @Username AND Contraseña = @Password `);
-    
-    
-    if (result.recordset.length > 0) {
-        console.log("si esta el usuario")
-        const datosUsuario = result.recordset[0];
-        UserDto.IdUser=datosUsuario.IdUser;
-        UserDto.IdUser = datosUsuario.IdUser;
-        UserDto.User = datosUsuario.Usuario;
-        UserDto.Password = datosUsuario.Contraseña;
-        UserDto.Rol = datosUsuario.Rol;
-        UserDto.IdPerson = datosUsuario.IdPersonfk;
-        result.recordset.forEach((item) => {
-            console.log(item);
 
-        });
-        
-        console.log(UserDto.IdPerson);
-        return result.recordset.length > 0
+
+    if (result.recordset.length > 0) {
+        const datosUsuario = result.recordset[0];
+        if (datosUsuario.Usuario === Username) {
+            console.log("si esta el usuario")
+
+            UserDto.IdUser = datosUsuario.IdUser;
+            UserDto.IdUser = datosUsuario.IdUser;
+            UserDto.User = datosUsuario.Usuario;
+            UserDto.Password = datosUsuario.Contraseña;
+            UserDto.Rol = datosUsuario.Rol;
+            UserDto.IdPerson = datosUsuario.IdPersonfk;
+            result.recordset.forEach((item) => {
+                console.log(item);
+
+            });
+
+            console.log(UserDto.IdPerson);
+            return result.recordset
+        }
+
     }
     else {
         console.log("no se encuentra")

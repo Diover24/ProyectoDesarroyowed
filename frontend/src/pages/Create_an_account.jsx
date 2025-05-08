@@ -164,14 +164,14 @@ export default function Create_an_account() {
                                 You must agree before submitting.
                             </div>
                         </div>
-                        <div className="col-12 ">
+                        <div className="col-12 mt-3 mb-3">
                             <button className="btn btn-primary " type="submit" id='register_person' >Continuar</button>
                         </div>
                     </div>
                 </form>
             ) : (
                 <form id='NextForm' onSubmit={handleUserSubmit}>
-                    <div className='container '>
+                    <div className='container  '>
                         <div className='row'>
                             <div class="col mb-3">
                                 <label for="User" className="form-label">Username</label>
@@ -206,12 +206,11 @@ export default function Create_an_account() {
 
                     </div>
                     <div className='text-start'>
-                        <button className="btn btn-primary  " type="button" onClick={() => setMostrarSegundoFormulario(false)}>Atras</button>
+                        <button className="btn btn-primary mb-3 " type="button" onClick={() => setMostrarSegundoFormulario(false)}>Atras</button>
                     </div>
 
                 </form>
             )}
-            <h1> colocar en el js: is-invalid/ is-valid</h1>
 
         </div>
 

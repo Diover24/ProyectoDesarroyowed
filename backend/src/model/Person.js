@@ -11,6 +11,17 @@ export const findPersonByCedula = async (cedula) => {
     console.log("paso el validador")
     return result.recordset.length > 0;
 };
+export const extractPerson = async () => {
+    const pool = await getConnection
+
+    console.log("entro al validador de cedula")
+    const result = await pool
+        .request()
+        .input('IdPerson', UserDto.IdPerson)
+        .query(`SELECT * FROM Persona WHERE IdPerson = @IdPerson`);
+    console.log("paso el validador")
+    return result.recordset;
+};
 
 export const createPerson = async (personData) => {
 

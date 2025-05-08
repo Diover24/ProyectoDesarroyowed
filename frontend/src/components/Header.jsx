@@ -1,67 +1,68 @@
 import React, { useState } from 'react'
 import '../styles/styles.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-export default function Header() {
-  const [mostrarMenu, setMostrarMenu] = useState(false);
+
+export default function Header({ setMostrarMenu, mostrarMenu }) {
+  const navigate = useNavigate();
   return (
 
     <div >
-      <nav className='navbar bg-tertiary  mb-3 ' id='Header'>
+      <nav className='navbar bg-tertiary mb-3 ' id='Header'>
 
-        <div className='container-fluid'>
-          <a className='navbar-brand ' href="http://localhost:5173/">
+        <div className='container-fluid md-3'>
             <img src="/img/tributum.gif" alt="" width="130" height="40" className="d-inline-block align-text-top" />
-          </a>
 
-          <div class="">
-            <Link to="/MyTaxes" className="btn btn-dark ">Visualizar Impuesto for de momen</Link>
-
-
-          </div>
           {!mostrarMenu ? (
             <div class="ms-auto">
-              <Link to="/login" className="btn btn-dark " onClick={() => setMostrarMenu(true)}>Iniciar Sesión</Link>
+              <Link to="/login" className="btn btn-dark " >Iniciar Sesión</Link>
 
             </div>
           ) : (
-            <div className='ms-auto' >
-              <button className='navbar-toggler navbar-dark' type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-                <span className='navbar-toggler-icon ' id='hamburger'></span>
-              </button>
-              <div className='offcanvas offcanvas-end text-bg-dark' tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-                <div className='offcanvas-header'>
-                  <h2 className='offcanvas-title' id="offcanvasDarkNavbarLabel">Menu</h2>
-                  <button type="button" className='btn-close btn-close-white' data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div className='offcanvas-body d-flex flex-column justify-content-between'>
-                  <ul className='navbar-nav  flex-grow-1 pe-3'>
-                    <li className='nav-item'>
-                      <a className='nav-link active' aria-current="page" href="#" id='LinkMenu'>Mis Impuestos</a>
-                    </li>
-                    <li className='nav-item'>
-                      <a className='nav-link active' href="#" id='LinkMenu'>Agregar impuesto</a>
-                    </li>
-                    <li className='nav-item dropdown'>
-                      <a className='nav-link dropdown-toggle' href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id='LinkMenu'> Mi Cuenta</a>
-                      <ul className='dropdown-menu dropdown-menu-dark'>
-                        <li><a className='dropdown-item' href="#">Configuracion</a></li>
-                        <li><a className='dropdown-item' href="#">Historial</a></li>
-                      </ul>
-                    </li>
-                    <li className='nav-item'>
-                      <Link to="/Help" className="nav-link active" id='LinkMenu'>Ayuda</Link>
-                    </li>
-                    <li className='nav-item'>
+            <>
+              <div className='ms-5 fs-3 mt-2 fw-semibold fst-italic text-light'id='nava'> 
+                <Link to="/InterfaceParther" className='nav-link active' id='LinkHeader'>Inicio</Link>
+              </div>
 
-                    </li>
-                  </ul>
-                  <div className='mt-3'>
-                    <a href="http://localhost:5173/" className="btn btn-primary" >Cerrar Sesión</a>
+              <div className='ms-auto' >
+                <button className='navbar-toggler navbar-dark' type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                  <span className='navbar-toggler-icon ' id='hamburger'></span>
+                </button>
+                <div className='offcanvas offcanvas-end text-bg-dark' tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                  <div className='offcanvas-header'>
+                    <h2 className='offcanvas-title' id="offcanvasDarkNavbarLabel">Menu</h2>
+                    <button type="button" className='btn-close btn-close-white' data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+                  <div className='offcanvas-body d-flex flex-column justify-content-between'>
+                    <ul className='navbar-nav  flex-grow-1 pe-3'>
+                      <li className='nav-item'>
+                        <Link to="/MyTaxes" className='nav-link active' id='LinkMenu'>Mis Impuestos</Link>
+                      </li>
+                      <li className='nav-item'>
+                        <a className='nav-link active' href="#" id='LinkMenu'>Agregar impuesto</a>
+                      </li>
+                      <li className='nav-item dropdown'>
+                        <a className='nav-link dropdown-toggle' href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id='LinkMenu'> Mi Cuenta</a>
+                        <ul className='dropdown-menu dropdown-menu-dark'>
+                          <li><a className='dropdown-item' href="#">Configuracion</a></li>
+                          <li><a className='dropdown-item' href="#">Historial</a></li>
+                        </ul>
+                      </li>
+                      <li className='nav-item'>
+                        <Link to="/Help" className="nav-link active" id='LinkMenu'>Ayuda</Link>
+                      </li>
+                      <li className='nav-item'>
+
+                      </li>
+                    </ul>
+                    <div className='mt-3'>
+                      <button className="btn btn-primary" onClick={() => { localStorage.removeItem("logueado"); setMostrarMenu(false); navigate('/'); }}>Cerrar Sesión</button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </>
+
           )}
         </div>
 

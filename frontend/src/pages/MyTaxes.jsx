@@ -3,7 +3,9 @@ import axios from 'axios';
 export default function MyTaxes() {
     const [mostrarFormularioVehiculo, setMostrarFormularioVehiculo] = useState(true);
     const [mostrarTaxesPredial, setMostrarTaxesPresial] = useState(true);
-    const [taxes, setTaxes] = useState([])
+    const [mostrarNota, setMostrarNota] = useState(false);
+    const [taxesVehiculos, setTaxesVehiculos] = useState([])
+    const [taxesPredial, setTaxesPredial] = useState([])
     const [error, setError] = useState('')
     const [taxesForm, setTaxesForm] = useState({
         filtros: '',
@@ -22,19 +24,22 @@ export default function MyTaxes() {
             const response = await axios.post('http://localhost:3000/api/Mytaxes', taxesForm);
             const data = response.data;
             console.log("va")
-            alert(data.message);
-            console.log('Datos enviados correctamente:', data);
-            setTaxes(data)
+            setMostrarNota(true)
             if (filtros.value === 'Predial') {
+                setTaxesPredial(data.predial);
                 setMostrarTaxesPresial(false)
                 setMostrarFormularioVehiculo(true)
             }
             else if (filtros.value === 'Vehiculos') {
+                setTaxesVehiculos(data.vehiculos);
                 setMostrarTaxesPresial(true)
                 setMostrarFormularioVehiculo(false)
             }
             else {
-
+                setTaxesVehiculos(data.vehiculos);
+                setTaxesPredial(data.predial);
+                setMostrarTaxesPresial(false)
+                setMostrarFormularioVehiculo(false)
             }
         } catch (error) {
             if (error.response) {
@@ -91,10 +96,21 @@ export default function MyTaxes() {
                     </div>
 
                 </form>
+                {!mostrarNota ?(
+                    <div className="max-w-xl mx-auto mt-8">
+                    <div className="bg-gray-100 border border-gray-300 text-gray-800 px-6 py-4 rounded-lg shadow-sm">
+                      <p className="text-center text-base">
+                        Presiona <span className="font-semibold">Buscar</span> para consultar tus impuestos registrados.
+                      </p>
+                    </div><br />
+                  </div>
+                  
+                  
+                ):true}
                 {!mostrarFormularioVehiculo ? (
                     <>
-                        <h1 className='text-center mt-e'>Vehiculos</h1>
-                        <table className="table table-striped">
+                        <h1 className='text-center mt-3 '>Vehiculos</h1>
+                        <table className="table table-striped mt-3">
                             <thead>
                                 <tr className='text-center'>
                                     <th scope="col">Cilindraje</th>
@@ -109,7 +125,7 @@ export default function MyTaxes() {
                             <tbody>
 
 
-                                {taxes.map((p) =>
+                                {taxesVehiculos.map((p) =>
 
                                     <tr key={p.Placa} className='text-center'>
 
@@ -121,28 +137,22 @@ export default function MyTaxes() {
                                         <td scope="row">{p.Pago}</td>
                                         <td scope="row">{p.Placa}</td>
                                         <td scope="row">{p.TipoDeImpuesto}</td>
-                                        <td scope="row"><button className="btn btn-dark">Editar</button></td>
+                                        <td scope="row"><button className="btn btn-dark">Pagar</button></td>
                                     </tr>
                                 )}
                             </tbody>
-                        </table>
+                        </table><br />
                     </>
 
 
 
-                ) : (
-                    <div className='container mt-3'>
-                        <p>Tambien Puesdes buscar por la placa o por medio de la Dirrecccion de la casa desde el buscador</p>
-                    </div>
-
-
-                )}
+                ) : true}
                 {!mostrarTaxesPredial ? (
-                    <>
-                        <h1 className='text-center mt-e'>Predial</h1>
-                        <table className="table table-striped">
+                    < div className=''>
+                        <h1 className='text-center mt-3 '>Predial</h1>
+                        <table className="table table-striped mb-3 mt-3">
                             <thead>
-                                <tr className='text-center'>
+                                <tr className='text-center mb-3'>
                                     <th scope="col">Direccion</th>
                                     <th scope="col">Fecha Limite</th>
                                     <th scope="col">Metros Cuadrados</th>
@@ -154,9 +164,9 @@ export default function MyTaxes() {
                             <tbody>
 
 
-                                {taxes.map((p) =>
+                                {taxesPredial.map((p) =>
 
-                                    <tr key={p.Placa} className='text-center'>
+                                    <tr key={p.Direcion} className='text-center mb-3'>
 
                                         <td scope="row">{p.Direcion}</td>
                                         <td scope="row"><span>
@@ -165,23 +175,16 @@ export default function MyTaxes() {
                                         <td scope="row">{p.Metros_Cuadrados}</td>
                                         <td scope="row">{p.Pago}</td>
                                         <td scope="row">{p.TipoDeImpuesto}</td>
-                                        <td scope="row"><button className="btn btn-dark">Editar</button></td>
+                                        <td scope="row"><button className="btn btn-dark">Pagar</button></td>
                                     </tr>
                                 )}
                             </tbody>
-                        </table>
+                        </table><br />
 
-                    </>
-
-
-                ) : (
-                    <div className='container mt-3'>
-                        <h5>Nota</h5>
-                        <p>Tambien Puesdes buscar por la placa o por medio de la Dirrecccion de la casa desde el buscador</p>
                     </div>
 
 
-                )}
+                ) : true}
 
 
             </div>

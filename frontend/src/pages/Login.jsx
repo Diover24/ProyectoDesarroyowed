@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
-export default function Login() {
+import { Link,useNavigate } from 'react-router-dom'
+export default function Login({setMostrarMenu}) {
   const [userForm, setUserForm] = useState({
     Username: '',
     Password: ''
   });
+  const navigate = useNavigate();
+
   const handleUserChange = (e) => {
     setUserForm({
       ...userForm,
@@ -17,8 +19,8 @@ export default function Login() {
     try {
       const response = await axios.post('http://localhost:3000/api/LoginUser', userForm);
       const data = response.data;
-      alert(data.message);
-      console.log('Datos enviados correctamente:', data);
+      setMostrarMenu(true);
+      navigate('/InterfaceParther');
     } catch (error) {
       if (error.response) {
         const status = error.response.status;
@@ -38,7 +40,7 @@ export default function Login() {
   };
   return (
     <div >
-      <div className='container align-items-center ' id='form'>
+      <div className='container align-items-center ' id='login'>
         <form className='row g-3 mt-3' onSubmit={handleUserSubmit}>
           <h1 className='text-decoration'>Inicio De Sesión</h1>
           <div className="form-floating mb-3 mt-3">

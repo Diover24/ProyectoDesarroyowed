@@ -27,7 +27,7 @@ export const LoginUser = async (req, res) => {
         const result = await loginUser({Username, Password});
         if (result) {
             console.log("valido")
-            return res.status(201).json({ message: 'validado correctamente.' });
+            return res.status(201).json(result);
         }
         else{
             return res.status(400).json({ message: 'El usuario o la contraseña es incorrecta.' });

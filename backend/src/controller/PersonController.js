@@ -1,4 +1,4 @@
-import { findPersonByCedula, createPerson } from '../model/Person.js';
+import { findPersonByCedula, createPerson, extractPerson } from '../model/Person.js';
 
 export const registerPerson = async (req, res) => {
     const { ID_cards, first_name, middle_name, first_surname, second_surname, number, mail, address } = req.body;
@@ -12,6 +12,19 @@ export const registerPerson = async (req, res) => {
         console.log("paso a crear")
         await createPerson({ ID_cards, first_name, middle_name, first_surname, second_surname, number, mail, address });
         res.status(201).json({  message: 'Usuario registrado exitosamente.' });
+
+    } catch (error) {
+        res.status(500).json({  message: 'Error en el registro.', error: error.message });
+    }
+};
+export const extractPersonModel = async (req, res) => {
+    
+    try {
+        const personExists = await extractPerson();
+        if (personExists) {
+            res.status(201).json(personExists);
+        }
+        
 
     } catch (error) {
         res.status(500).json({  message: 'Error en el registro.', error: error.message });

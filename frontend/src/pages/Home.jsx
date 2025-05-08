@@ -6,7 +6,7 @@ export default function Home() {
       <div className='row align-items-center'>
         <div className='col'>
           <div className="card" >
-          <img src="/aviso.jpeg" class="card-img-top" alt="..."/>
+          <img src="/aviso.jpeg" className="card-img-top" alt="..."/>
             <div className="card-body">
               <h5 className="card-title">Nuestro Enfoque</h5>
               <p className="card-text">Nuestra plataforma está diseñada para ayudarte a mantenerte al tanto de tus obligaciones tributarias. Sabemos que recordar las fechas de pago de impuestos puede ser complicado, por eso, te ofrecemos una herramienta fácil de usar que te notifica a tiempo cuándo debes realizar tus pagos. Ya no más olvidos, retrasos o sanciones: con nosotros, estarás siempre informado y al día con tus impuestos.</p>
@@ -15,7 +15,7 @@ export default function Home() {
         </div>
         <div className='col'>
           <div className='card'>
-          <img src="/impuestos.jpg" class="card-img-top" alt="..."/>
+          <img src="/impuestos.jpg" className="card-img-top" alt="..."/>
             <div className='card-body'>
               <h5 className='card-title'> Tipos De Impuestos </h5>              
               <li>💼 Impuesto de renta</li>
@@ -31,7 +31,7 @@ export default function Home() {
         </div>
         <div className='col'>
          <div className="card" >
-          <img src="/formulario.jpeg" class="card-img-top" alt="..."/>
+          <img src="/formulario.jpeg" className="card-img-top" alt="..."/>
           <div className="card-body">
             <h5 className="card-title">Registrate</h5>
             <p className="card-text">
