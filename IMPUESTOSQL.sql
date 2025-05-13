@@ -133,7 +133,8 @@ INSERT INTO Estado (Nombre)
 VALUES
 ('pagado'),
 ('pendiente'),
-('rechazado');
+('rechazado'),
+('vencido');
 select*from Estado
 
 select*from Tipo_De_Impuesto
@@ -560,6 +561,47 @@ VALUES (1, 2, '2022-01-01', 100);
 
 SELECT * FROM Impuesto;
 
+
+---trigger de actualizacion de pago
+
+create trigger act_por_pago
+on Pago
+after update 
+as
+begin
+
+    if exists (select 1 from inserted where montoPagado = 0)
+    begin
+       
+        insert into Factura (FechaPago, IdImpuFk)
+        select GETDATE(), i.IdFacturaFk
+        from inserted i;
+
+        
+        insert into DetalleFactura (IdEstadoFk, IdFacturaFk, MontoTotal, FechaPago, MetodoParaPagar)
+        select 1, f.IdFactura, i.MontoPagado, GETDATE(), 'actualizar cual es el tipo de pago'--como organizar esto del tipo de pago?
+        from inserted i inner join Factura f ON f.IdImpuFk = i.IdFacturaFk
+        where f.FechaPago = (
+            SELECT MAX(FechaPago) FROM Factura WHERE IdImpuFk = i.IdFacturaFk
+        );
+ 
+
+	end
+
+end
+select*from Pago
+select*from DetalleFactura
+select*from Factura
+select*from Impuesto
+
+insert into Pago(MontoPagado,IdFacturaFk)
+values
+(300,5);
+
+
+update Pago
+set MontoPagado=0
+where IdPago=9
 
 ---cursores para practicar 
 
