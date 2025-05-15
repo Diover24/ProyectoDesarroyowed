@@ -39,7 +39,7 @@ export default function Header({ setMostrarMenu, mostrarMenu }) {
                         <Link to="/MyTaxes" className='nav-link active' id='LinkMenu'>Mis Impuestos</Link>
                       </li>
                       <li className='nav-item'>
-                        <a className='nav-link active' href="#" id='LinkMenu'>Agregar impuesto</a>
+                        <Link to="/AddTaxes" className='nav-link active' id='LinkMenu'>Agregar impuestos</Link>
                       </li>
                       <li className='nav-item dropdown'>
                         <a className='nav-link dropdown-toggle' href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id='LinkMenu'> Mi Cuenta</a>

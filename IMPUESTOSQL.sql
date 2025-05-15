@@ -277,7 +277,33 @@ VALUES
 
 select*from DetalleFactura
 
+ALTER PROCEDURE VERIMPUESTO
+@ID INT,
+@PLACA VARCHAR (50),
+@DIRECCION VARCHAR(100)
+AS
+BEGIN
+	select I.Fecha_Limite,I.Pago, T.Nombre as Nombre, V.Nombre AS NombreVehiculo, V.Placa, V.Cilindraje, P.Direcion, P.Metros_Cuadrados from 
+	Impuesto I inner join Tipo_De_Impuesto T on I.IdTipoImpuestoFk = T.IdTipoImpu 
+	left join Vehiculo V on T.IdVehiculofk = V.IdVehiculo
+	left join Predial P on T.IdPredialfk = P.IdPredial
+	WHERE (V.Placa=@PLACA OR P.Direcion= @DIRECCION) AND I.IdPersonFk=@ID
+END
+EXEC VERIMPUESTO @ID = 1, @PLACA = 'ABC12A', @DIRECCION = '';
+EXEC VERIMPUESTO @ID = 1, @PLACA = '', @DIRECCION = 'Calle 2';
 
+
+select*from Impuesto I inner join Tipo_De_Impuesto T on I.IdTipoImpuestoFk = T.IdTipoImpu 
+	left join Vehiculo V on T.IdVehiculofk = V.IdVehiculo
+	left join Predial P on T.IdPredialfk = P.IdPredial
+	WHERE (V.Placa='ABC12A' OR P.Direcion= '') AND I.IdPersonfk=1
+
+
+select*from Persona
+select*from Impuesto
+select*from Tipo_De_Impuesto
+select*from Vehiculo
+select*from Predial
 
 
 create procedure Estado_factura
@@ -445,7 +471,8 @@ select * FROM Persona
 select * from Impuesto
 SELECT * FROM Tipo_De_Impuesto
 select*from Vehiculo
-CREATE PROCEDURE MostrarImpuestosVehiculo
+
+ALTER PROCEDURE MostrarImpuestosVehiculo
 	@id INT
 AS
 BEGIN
@@ -453,7 +480,7 @@ BEGIN
 	SELECT 
 		I.Fecha_Limite, 
 		I.Pago, 
-		T.Nombre AS TipoDeImpuesto, 
+		T.Nombre, 
 		V.Cilindraje,
 		V.Nombre AS NombreVehiculo,
 		V.Placa 
@@ -466,7 +493,7 @@ END
 
 EXEC MostrarImpuestosVehiculo 1
 
-CREATE PROCEDURE MostrarImpuestosPredial
+ALTER PROCEDURE MostrarImpuestosPredial
 	@id INT
 AS
 BEGIN
@@ -474,7 +501,7 @@ BEGIN
 	SELECT 
 		I.Fecha_Limite, 
 		I.Pago, 
-		T.Nombre AS TipoDeImpuesto, 
+		T.Nombre, 
 		P.Direcion,
 		P.Metros_Cuadrados
 	FROM Impuesto I 

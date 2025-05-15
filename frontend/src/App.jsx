@@ -9,6 +9,7 @@ import InterfaceParther from './pages/InterfaceParther';
 import Login from './pages/Login';
 import Create_an_account from './pages/Create_an_account';
 import Help from './pages/Help';
+import AddTaxes from './pages/AddTaxes';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import MyTaxes from './pages/MyTaxes';
 
@@ -40,6 +41,7 @@ function App() {
         <Route path="/InterfaceParther" element={<InterfaceParther />} />
         <Route path='/Login' element={<Login setMostrarMenu={setMostrarMenu} />} />
         <Route path='/MyTaxes' element={<MyTaxes />} />
+        <Route path='/AddTaxes' element={<AddTaxes />} />
         <Route path='/Register' element={<Create_an_account />} />
         <Route path='/Help' element={<Help />}></Route>
 

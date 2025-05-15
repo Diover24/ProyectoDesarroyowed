@@ -39,8 +39,8 @@ export default function Login({setMostrarMenu}) {
     }
   };
   return (
-    <div >
-      <div className='container align-items-center ' id='login'>
+    <div className='vh-100'>
+      <div className='container align-items-center  ' id='login'>
         <form className='row g-3 mt-3' onSubmit={handleUserSubmit}>
           <h1 className='text-decoration'>Inicio De Sesión</h1>
           <div className="form-floating mb-3 mt-3">
